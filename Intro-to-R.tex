@@ -1,0 +1,1598 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Introduction to R},
+            pdfauthor={Stacey Borrego},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Introduction to R}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Stacey Borrego}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{4/07/2018}
+
+
+\begin{document}
+\maketitle
+
+\subsubsection{Purpose}\label{purpose}
+
+The purpose of this document is to give a very brief and digestable
+introduction to R. There are so many details in every programming
+language and certainly more thorough explanations are needed than I will
+provide here. My goal with this document is to expose you to R and
+hopefully pique your interest to learn more.
+
+\subsubsection{Resources used for this
+document}\label{resources-used-for-this-document}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{http://shop.oreilly.com/product/0636920030157.do}{\emph{Bioinformatics
+  Data Skills: Reproducible and Robust Research with Open Source Tools}}
+  by Vince Buffalo (O'Reilly 2015)
+\item
+  \href{https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf}{R
+  Markdown Cheat Sheet}
+\end{itemize}
+
+\subsubsection{Some Notes about RStudio and
+R}\label{some-notes-about-rstudio-and-r}
+
+\paragraph{RStudio}\label{rstudio}
+
+\begin{itemize}
+\tightlist
+\item
+  RStudio provides an enviroment with helpful tools for you to use and
+  build scripts in R. Your basic enviroment will have at least your
+  Console and Source (basically a text editor for you to write your
+  script/file). You can change the layout of your RStudio enviroment by
+  going to Tools \textgreater{} Global Options \textgreater{} Pane
+  Layout.
+\item
+  Learn more about
+  \href{https://www.rstudio.com/products/rstudio/features/}{RStudio
+  features}.
+\end{itemize}
+
+\paragraph{R}\label{r}
+
+\begin{itemize}
+\tightlist
+\item
+  Some programming languages are very picky about spacing, but R is
+  usually not. That being said, there are style conventions that are
+  recommended. These conventions extend from spacing to naming and
+  everything in between. Here is a
+  \href{http://adv-r.had.co.nz/Style.html}{Style Guide} to get you
+  started.
+\end{itemize}
+
+\section{R Basics}\label{r-basics}
+
+\subsection{Simple Math}\label{simple-math}
+
+Let's get started by writing some simple math expressions for R to
+evaluate.
+
+You can run expressions in one of two ways, or both if you are curious!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Copy or type each expression into the RStudio Console. Hit
+  Enter/Return.
+\item
+  Open a new R script (File \textgreater{} New File \textgreater{} R
+  script).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Copy the expression into the new file.
+  \item
+    Place your cursor on the line you want to run, or select everything.
+  \item
+    Hit the run button on the top right. This will run the expression on
+    the current line your cursor is on or whatever is selected.
+  \item
+    Keyboard Shortcut to run your script/expression: Command-Enter (OS
+    X) or Control-Enter (Windows, Linux)
+  \end{itemize}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{+}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{-}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{*}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{/}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.333333
+\end{verbatim}
+
+To indicate the order of evaluation, use parentheses to indicate which
+expression should be evaluated first.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4} \OperatorTok{+}\StringTok{ }\DecValTok{3}\OperatorTok{/}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\DecValTok{4} \OperatorTok{+}\StringTok{ }\DecValTok{3}\NormalTok{)}\OperatorTok{/}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.5
+\end{verbatim}
+
+We can also use functions to perform mathematical operations. Functions
+are written with the function name followed by parentheses, no spaces! A
+function takes zero or more arguments, evaluates the input, and outputs
+a return value.
+
+To find the square root of a number, we can use the function sqrt().
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\subsection{Getting Help}\label{getting-help}
+
+To learn more about the arguments for a function you can use the
+function args(), just provide the function name as the agrument.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{args}\NormalTok{(args)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (name) 
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{args}\NormalTok{(sqrt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{args}\NormalTok{(plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x, y, ...) 
+## NULL
+\end{verbatim}
+
+If you want to read the documentation for a function, you can pull up a
+special help window in Rstudio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{help}\NormalTok{(sqrt)}
+\NormalTok{?sqrt}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Variables}\label{variables}
+
+Variables are a great way to save a value for future use. We can assign
+a value to a symbol using the \textless{}- assignment operator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+When we want to see what value our variable is assigned we can just type
+in the variable symbol into the console. You can also look at the
+Environment window in RStudio and it will show you all the variables you
+have assigned and their values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+Once our variable has a value assigned, we can use it in functions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+Variables can also be assigned the ouput of an expression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{square_result <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(x)}
+\NormalTok{square_result}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\subsection{Vectors}\label{vectors}
+
+R is most known for its use of vectors and vectorization. Everything is
+stored in a vector; a single value is stored in a vector of 1. You can
+see the length of a vector using the function length().
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+We can create longer vectors using c(), which stands for concatenate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 5 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+Vectorization is the process by which a process is applied to a whole
+array instead of a single element. This means if the variable \textbf{y}
+were multiplied by 2, each element will be muliplied by 2 but the vector
+length will remain at 3.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2 10 14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(y }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+Vectorization allows us to perform arithmetic operations on two vectors,
+each operation occurring elementwise (eg a1 + b1, a2 + b2, a3 + b3
+\ldots{})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{3}
+\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b <-}\StringTok{ }\DecValTok{4}\OperatorTok{:}\DecValTok{6}
+\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 5 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{+}\StringTok{ }\NormalTok{b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 7 9
+\end{verbatim}
+
+If the two vectors are not the same length, R will recycle the values of
+the shorter vector (eg c1 + d1, c2 + d2, c3 + d1, c4 + d2)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{4}
+\NormalTok{c}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{2}
+\NormalTok{d}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c }\OperatorTok{+}\StringTok{ }\NormalTok{d}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 4 4 6
+\end{verbatim}
+
+A warning will pop up if the longer vector length is not a multiple of
+the shorter vector length. The operation will still be performed but R
+thought it should say something.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{5}
+\NormalTok{e}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f <-}\StringTok{ }\DecValTok{1}\OperatorTok{:}\DecValTok{2}
+\NormalTok{f}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e }\OperatorTok{+}\StringTok{ }\NormalTok{f}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in e + f: longer object length is not a multiple of shorter object
+## length
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 2 4 4 6 6
+\end{verbatim}
+
+We can also provide vectors as an argument to a function. Depending on
+what the function does, your output will look differently. For example,
+sqrt() only takes the square root of one number at a time, so it returns
+a value for each number in the vector \textbf{y} -- sqrt(1), sqrt(5),
+sqrt(7). However, mean() computes the average of a vector of numbers and
+thus returns a single value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 5 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.000000 2.236068 2.645751
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.333333
+\end{verbatim}
+
+Note: When you look up the arguments for a function, you will often see
+\textbf{x} given as the first argument. The documentation will provide
+more information as to what \textbf{x} is. For example when you look up
+the documentation for square root (?sqrt), \textbf{x} is defined as ``a
+numeric or complex array''. When you look at the documentation for mean
+(?mean), \textbf{x} is defined as ``typically a vector-like object''.
+Just don't confuse this with a variable that you may have set, it is
+just a placeholder.
+
+\subsection{Vector Types}\label{vector-types}
+
+Vectors in R must contain elements of the same type. We can check the
+vector type by using the function class() or typeof(). It is important
+to note that R will coerce vectors of different types to the type that
+leads to no information loss. For example, a vector containing both
+characters and numeric data will be coerced into character values.
+
+\textbf{Numeric (aka double)}
+
+\begin{itemize}
+\tightlist
+\item
+  Any real number
+\item
+  example: 4, -4, 4.4, -4.04
+\item
+  \emph{Test function}: is.numeric()
+
+  \begin{itemize}
+  \tightlist
+  \item
+    returns TRUE or FALSE value
+  \end{itemize}
+\item
+  \emph{Coercion function}: as.numeric()
+
+  \begin{itemize}
+  \tightlist
+  \item
+    coerces values to be numeric
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num_example <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\OperatorTok{-}\DecValTok{4}\NormalTok{, }\FloatTok{4.4}\NormalTok{, }\OperatorTok{-}\FloatTok{4.04}\NormalTok{)}
+\KeywordTok{class}\NormalTok{(num_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\textbf{Integer}
+
+\begin{itemize}
+\tightlist
+\item
+  Any whole number
+\item
+  example: 4, -4, 44
+\item
+  By default, integer values are assigned as numeric. It must be
+  explicitly indicated that the values should be treated as integers.
+\item
+  \emph{Test function}: is.integer()
+\item
+  \emph{Coercion function}: as.integer()
+\item
+  Will sometimes be indicated with an L after the number.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int_example <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\OperatorTok{-}\DecValTok{4}\NormalTok{, }\DecValTok{44}\NormalTok{)}
+\KeywordTok{class}\NormalTok{(int_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int_example <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(int_example)}
+\KeywordTok{class}\NormalTok{(int_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int_example2 <-}\StringTok{ }\DecValTok{5}
+\KeywordTok{is.integer}\NormalTok{(int_example2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int_example2 <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\KeywordTok{is.integer}\NormalTok{(int_example2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{int_example3 <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(}\FloatTok{5.9999}\NormalTok{)}
+\NormalTok{int_example3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\textbf{Character}
+
+\begin{itemize}
+\tightlist
+\item
+  Character data represent text, which are called strings. Text data
+  that is enclosed in either double or single quotes is interpreted as a
+  string.
+\item
+  example: ``i am a string'', ``ABCD''
+\item
+  \emph{Test function}: is.character()
+\item
+  \emph{Coercion function}: as.character()
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char_example <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{)}
+\KeywordTok{class}\NormalTok{(char_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num_example}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.00 -4.00  4.40 -4.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.character}\NormalTok{(num_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{char_example2 <-}\StringTok{ }\KeywordTok{as.character}\NormalTok{(num_example)}
+\NormalTok{char_example2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "4"     "-4"    "4.4"   "-4.04"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.character}\NormalTok{(char_example2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\textbf{Logical}
+
+\begin{itemize}
+\tightlist
+\item
+  Logical values represent Boolean values, a binary value having only
+  two options. In R, Boolean values are TRUE or FALSE
+\item
+  \emph{Test function}: is.logical()
+\item
+  \emph{Coercion function}: as.logical()
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log_example <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{is.logical}\NormalTok{(log_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num_example}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4.00 -4.00  4.40 -4.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.logical}\NormalTok{(num_example)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log_example2 <-}\StringTok{ }\KeywordTok{as.logical}\NormalTok{(num_example)}
+\NormalTok{log_example2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE TRUE TRUE TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{is.logical}\NormalTok{(log_example2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\subsection{Special Values}\label{special-values}
+
+There are four special values in R that may cause problems in your
+analysis, whether you are aware of it or not. These values are NA, NULL,
+Inf/-Inf, and NaN.
+
+\textbf{NA}
+
+\begin{itemize}
+\tightlist
+\item
+  ``Not Available''
+\item
+  NA represents missing data and any function performed on NA will
+  result in NA
+\item
+  A few ways to handle them:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    is.na()
+  \item
+    na.omit()
+  \item
+    complete.cases()
+  \item
+    na.rm = TRUE (this is an argument for a function)
+  \item
+    sort(x, na.last = TRUE)
+  \end{itemize}
+\end{itemize}
+
+\textbf{NULL}
+
+\begin{itemize}
+\tightlist
+\item
+  ``No value, none''
+\item
+  Null represents not having a value, which is different than the
+  missing data of NA
+\item
+  A few ways to handle them:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    is.null()
+  \end{itemize}
+\end{itemize}
+
+\textbf{Inf/-Inf}
+
+\begin{itemize}
+\tightlist
+\item
+  ``Positive infinity, negative infinity''
+\item
+  A few ways to handle them:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    is.infite()
+  \item
+    is.finite()
+  \end{itemize}
+\end{itemize}
+
+\textbf{NaN}
+
+\begin{itemize}
+\tightlist
+\item
+  ``Not a Number''
+\item
+  Values that are not numbers include: 0/0, infinity, negative infinity
+\item
+  A few ways to handle them:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    is.nan()
+  \item
+    coerce all NaN values to NA using is.na()
+  \end{itemize}
+\end{itemize}
+
+\section{Working with Data}\label{working-with-data}
+
+\subsection{Where am I?}\label{where-am-i}
+
+You can find your current working directory by using getwd() and setting
+the working directory with setwd(). You will want to replace my path
+with the path of your choosing.
+
+Using RStudio, in the Files tab you can navigate to a directory, select
+More, and then click Set as Working Directory.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/Users/stacey/Data/GitHub/Introduction-to-R"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{setwd}\NormalTok{(}\StringTok{"/Users/stacey/Data/GitHub/Introduction-to-R"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Reading Data into R}\label{reading-data-into-r}
+
+The following uses the combined\_out.txt file that was generated in the
+\href{https://sites.google.com/view/bioinformaticssg/presentations/read-counts}{Read
+Counts} meeting. Following the steps from the tutorial should generate
+the same file I have posted on the
+\href{https://github.com/bioinformaticssg/Introduction-to-R}{BioinformaticsSG
+GitHub page}. To get this file just follow the link to the GitHub page,
+click on the green \textbf{Clone or download} button in the upper right
+corner, and choose \textbf{Download ZIP}.
+
+There are two common ways to read data files into R, depending on the
+type of file they are. For comma separated value (CSV) files use
+read.csv() and for tab-delimited files use read.table(). There are
+options for reading in data of other types and code from a script but we
+will focus on these today for our data.
+
+For the read.table() command below, replace the path I have provided
+with your path to the file. If you have already set the working
+directory and it contains your file, you can just provide the file name.
+
+Note: the path and file names are strings and must be enclosed in
+quotes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{read.table}\NormalTok{(}\StringTok{"/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+When you run the read.table() command, you will see the data file
+printed to your console. It would be nice if it could be referred to
+without having to type out the read.table() command, so let's assign a
+variable to the data table.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now it will be easier to access and use the data table. You can now look
+at the top of the data using head(), at the end using tail(), determine
+the number of columns using ncol() or length(), the number of rows using
+nrow(), and the dimensions of the data dim().
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  V1 V2 V3 V4
+## 1 ENSG00000277248.1  0  0  0
+## 2 ENSG00000274237.1  0  0  0
+## 3 ENSG00000280363.1  0  0  0
+## 4 ENSG00000279973.1  0  0  0
+## 5 ENSG00000226444.2  0  0  0
+## 6 ENSG00000276871.1  0  0  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{tail}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              V1  V2   V3   V4
+## 1458 ERCC-00163   5    7   13
+## 1459 ERCC-00164   0    1    0
+## 1460 ERCC-00165  33   64   41
+## 1461 ERCC-00168   2    1    1
+## 1462 ERCC-00170   1    2    3
+## 1463 ERCC-00171 916 1253 1056
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ncol}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{nrow}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1463
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1463    4
+\end{verbatim}
+
+\subsection{Changing Column Names}\label{changing-column-names}
+
+As a default, read.table() assumes the data file does not have a first
+row with the names of each column. Although this is true for our data,
+it will not always be. If your data does have a header, just set the
+header argument to TRUE like so - read.table(``file.txt'', header=TRUE).
+You will notice, the header that R made for us when header=FALSE is V1,
+V2, V3, V4.
+
+Let's give our column names something more intuitive. First, look at a
+list of the column names using colnames().
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "V1" "V2" "V3" "V4"
+\end{verbatim}
+
+There are four columns that need new names. I am going to make a vector
+of strings that will represent each column's new name. Then I will
+assign the column names to be the names in the vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "V1" "V2" "V3" "V4"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new_names <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"GeneID"}\NormalTok{, }\StringTok{"Sample_1"}\NormalTok{, }\StringTok{"Sample_2"}\NormalTok{, }\StringTok{"Sample_3"}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(my_data) <-}\StringTok{ }\NormalTok{new_names}
+\KeywordTok{colnames}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "GeneID"   "Sample_1" "Sample_2" "Sample_3"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1 Sample_2 Sample_3
+## 1 ENSG00000277248.1        0        0        0
+## 2 ENSG00000274237.1        0        0        0
+## 3 ENSG00000280363.1        0        0        0
+## 4 ENSG00000279973.1        0        0        0
+## 5 ENSG00000226444.2        0        0        0
+## 6 ENSG00000276871.1        0        0        0
+\end{verbatim}
+
+\subsection{Indexing and Subsetting}\label{indexing-and-subsetting}
+
+When you read tabular data into R using read.csv() or read.table() it is
+stored as a dataframe. Just as any data table, dataframes have rows for
+observations and columns for each variable of the dataset. Each column
+of a dataframe is a vector and contains the same type of data as
+previously described. A dataframe, however, contains vectors of
+different types and that is why they exist.
+
+More often then not, we want to select certain columns or rows to work
+with, which is possible with an understanding of indexing and
+subsetting.
+
+First, let's take a look at indexing. R vectors are 1-indexed, which
+means that the first element in a vector is index 1. We can select the
+element(s) we want by calling the appropriate index/indices in brackets
+(example: vector{[}index{]}). Here \textbf{alphabet} is a vector of
+letters that you can select elements from.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet <-}\StringTok{ }\NormalTok{LETTERS}
+\NormalTok{alphabet}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q"
+## [18] "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "A"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "J"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "A" "B" "C" "D"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\KeywordTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{15}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "H" "E" "L" "L" "O"
+\end{verbatim}
+
+You can also remove elements in the same manner.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R"
+## [18] "S" "T" "U" "V" "W" "X" "Y" "Z"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\OperatorTok{-}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{13}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alphabet[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{26}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R"
+## [18] "S" "T" "U" "V" "W" "X" "Y"
+\end{verbatim}
+
+You can select elements of a dataframe as well but a little differently.
+A common way to access columns of a dataframe is by using the \$
+operator and the name of the column. I am not showing the output but you
+should she a list printed on the console window.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data}\OperatorTok{$}\NormalTok{GeneID}
+\NormalTok{my_data}\OperatorTok{$}\NormalTok{Sample_}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Alternatively, you can use brackets just as we did in the vector
+example. Since dataframes have two dimensions (rows and columns) the
+bracket operator can take two indexes separated by a comma (e.g. {[}row,
+column{]}). Omitting the row index will return all the rows (e.g. {[},
+column{]}) and ommitting the column index will return all the columns
+(e.g. {[}row, {]}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1 Sample_2 Sample_3
+## 1 ENSG00000277248.1        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1 Sample_2 Sample_3
+## 1 ENSG00000277248.1        0        0        0
+## 2 ENSG00000274237.1        0        0        0
+## 3 ENSG00000280363.1        0        0        0
+## 4 ENSG00000279973.1        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ENSG00000277248.1 ENSG00000274237.1 ENSG00000280363.1 ENSG00000279973.1
+## 1463 Levels: ENSG00000008735.13 ENSG00000015475.18 ... ERCC-00171
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1
+## 1 ENSG00000277248.1        0
+## 2 ENSG00000274237.1        0
+## 3 ENSG00000280363.1        0
+## 4 ENSG00000279973.1        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_2
+## 1 ENSG00000277248.1        0
+## 2 ENSG00000274237.1        0
+## 3 ENSG00000280363.1        0
+## 4 ENSG00000279973.1        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\StringTok{"GeneID"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] ENSG00000277248.1 ENSG00000274237.1 ENSG00000280363.1 ENSG00000279973.1
+## 1463 Levels: ENSG00000008735.13 ENSG00000015475.18 ... ERCC-00171
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"GeneID"}\NormalTok{, }\StringTok{"Sample_1"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1
+## 1 ENSG00000277248.1        0
+## 2 ENSG00000274237.1        0
+## 3 ENSG00000280363.1        0
+## 4 ENSG00000279973.1        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"GeneID"}\NormalTok{, }\StringTok{"Sample_2"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_2
+## 1 ENSG00000277248.1        0
+## 2 ENSG00000274237.1        0
+## 3 ENSG00000280363.1        0
+## 4 ENSG00000279973.1        0
+\end{verbatim}
+
+\subsection{Changing Row Names}\label{changing-row-names}
+
+When you look a the data table, you will notice the left most column are
+numbers, these are your row names. Some programs require that your row
+names are set to your gene names and expect the gene name column to be
+excluded.
+
+We can do this by using row.names() and subsetting the column containing
+the gene names. We will then exclude the gene name column and re-assign
+the my\_data variable so it will contain the modifications we just
+created.
+
+Note: Changing the column names or row names modifies the dataframe and
+does not require a re-assignment of the variable that the dataset is
+saved as.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              GeneID Sample_1 Sample_2 Sample_3
+## 1 ENSG00000277248.1        0        0        0
+## 2 ENSG00000274237.1        0        0        0
+## 3 ENSG00000280363.1        0        0        0
+## 4 ENSG00000279973.1        0        0        0
+## 5 ENSG00000226444.2        0        0        0
+## 6 ENSG00000276871.1        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{row.names}\NormalTok{(my_data)[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{row.names}\NormalTok{(my_data) <-}\StringTok{ }\NormalTok{my_data}\OperatorTok{$}\NormalTok{GeneID}
+\KeywordTok{head}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              GeneID Sample_1 Sample_2 Sample_3
+## ENSG00000277248.1 ENSG00000277248.1        0        0        0
+## ENSG00000274237.1 ENSG00000274237.1        0        0        0
+## ENSG00000280363.1 ENSG00000280363.1        0        0        0
+## ENSG00000279973.1 ENSG00000279973.1        0        0        0
+## ENSG00000226444.2 ENSG00000226444.2        0        0        0
+## ENSG00000276871.1 ENSG00000276871.1        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my_data <-}\StringTok{ }\NormalTok{my_data[, }\OperatorTok{-}\DecValTok{1}\NormalTok{]}
+\KeywordTok{head}\NormalTok{(my_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   Sample_1 Sample_2 Sample_3
+## ENSG00000277248.1        0        0        0
+## ENSG00000274237.1        0        0        0
+## ENSG00000280363.1        0        0        0
+## ENSG00000279973.1        0        0        0
+## ENSG00000226444.2        0        0        0
+## ENSG00000276871.1        0        0        0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{row.names}\NormalTok{(my_data)[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "ENSG00000277248.1" "ENSG00000274237.1" "ENSG00000280363.1"
+##  [4] "ENSG00000279973.1" "ENSG00000226444.2" "ENSG00000276871.1"
+##  [7] "ENSG00000277683.1" "ENSG00000277821.1" "ENSG00000273663.1"
+## [10] "ENSG00000278534.1"
+\end{verbatim}
+
+If you want a shortcut to renaming your rows, you can assign the column
+you want to be your row names when you first read your data in R. You
+know that index 1 is the ``GeneID'' column so you can pass 1 into your
+row.names argument.
+
+The column names are untouched and will still need to be modified as
+described above.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{named_data <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt"}\NormalTok{,}
+                         \DataTypeTok{row.names=}\DecValTok{1}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(named_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   V2 V3 V4
+## ENSG00000277248.1  0  0  0
+## ENSG00000274237.1  0  0  0
+## ENSG00000280363.1  0  0  0
+## ENSG00000279973.1  0  0  0
+## ENSG00000226444.2  0  0  0
+## ENSG00000276871.1  0  0  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rownames}\NormalTok{(named_data)[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "ENSG00000277248.1" "ENSG00000274237.1" "ENSG00000280363.1"
+##  [4] "ENSG00000279973.1" "ENSG00000226444.2" "ENSG00000276871.1"
+##  [7] "ENSG00000277683.1" "ENSG00000277821.1" "ENSG00000273663.1"
+## [10] "ENSG00000278534.1"
+\end{verbatim}
+
+\section{Packages}\label{packages}
+
+Packages are collections of R functions, data, and code that help beef
+up R's capabilities. It is very likely that someone has written a
+package that will help you achieve whatever your ultimate goal may be.
+Base R comes with a set of packages but for every new package you want
+to add you will have to install it manually -- don't worry, it is easy!
+
+\textbf{CRAN - install.packages()}
+
+\begin{itemize}
+\tightlist
+\item
+  CRAN = Comprehensive R Archive Network
+\item
+  This option downloads and installs packages from CRAN-like
+  repositories or from local files and is the most common way to get
+  packages
+\item
+  Find out more about this using ?install.packages
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\href{https://bioconductor.org/packages/release/BiocViews.html\#___Software}{\textbf{Bioconductor}}
+
+\begin{itemize}
+\tightlist
+\item
+  R packages for genomic data analysis are usually found on the
+  Bioconductor website
+\item
+  In an upcoming meeting, we will use DESeq2.
+  \href{https://bioconductor.org/packages/release/bioc/html/DESeq2.html}{HERE}
+  is the Bioconductor page with installation instructions,
+  documentation, and other helpful information.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{source}\NormalTok{(}\StringTok{"https://bioconductor.org/biocLite.R"}\NormalTok{)}
+\KeywordTok{biocLite}\NormalTok{(}\StringTok{"DESeq2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{RStudio - Packages}
+
+Lastly, RStudio has a feature to help you install packages in a point
+and click fashion.
+
+Choose the Packages tab \textgreater{} click Install \textgreater{}
+choose Repository(CRAN) \textgreater{} type the package name
+\textgreater{} hit Install.
+
+This the same as the install.packages() option so you may need to check
+Bioconductor if you don't find the package you are looking for.
+
+
+\end{document}
