@@ -2,10 +2,12 @@
 title: "Introduction to R"
 author: "Stacey Borrego"
 date: "4/07/2018"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 <br/>
@@ -313,7 +315,7 @@ Using RStudio, in the Files tab you can navigate to a directory, select More, an
 getwd()
 setwd("/Users/stacey/Data/GitHub/Introduction-to-R")
 ```
-
+<br/>
 
 ## Reading Data into R
 
@@ -345,6 +347,7 @@ length(my_data)
 nrow(my_data)
 dim(my_data)
 ```
+<br/>
 
 ## Changing Column Names
 
@@ -365,6 +368,7 @@ colnames(my_data) <- new_names
 colnames(my_data)
 head(my_data)
 ```
+<br/>
 
 ## Indexing and Subsetting
 
@@ -410,6 +414,7 @@ my_data[1:4, "GeneID"]
 my_data[1:4, c("GeneID", "Sample_1")]
 my_data[1:4, c("GeneID", "Sample_2")]
 ```
+<br/>
 
 ## Changing Row Names
 
@@ -439,6 +444,8 @@ named_data <- read.table("/Users/stacey/Data/GitHub/Introduction-to-R/combined_o
 head(named_data)
 rownames(named_data)[1:10]
 ```
+<br/>
+
 # Packages
 
 Packages are collections of R functions, data, and code that help beef up R's capabilities. It is very likely that someone has written a package that will help you achieve whatever your ultimate goal may be. Base R comes with a set of packages but for every new package you want to add you will have to install it manually -- don't worry, it is easy!
