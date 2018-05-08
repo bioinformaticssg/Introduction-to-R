@@ -1,7 +1,7 @@
 ---
 title: "Intro to R Extended"
 author: "Stacey Borrego"
-date: "4/11/2018"
+date: "5/08/2018"
 output:
   pdf_document: default
   html_document: default
@@ -42,8 +42,10 @@ I want to make our data more visually friendly so I will repeat the modification
 ```{r}
 # Make a vector with new names for each column
 new_names <- c("GeneID", "Sample_1", "Sample_2", "Sample_3")
+
 # Assign the column names of the dataframe to the list of new column names
 colnames(my_data) <- new_names
+
 # Look at the top of the dataframe. You should see new column names at the top.
 head(my_data)
 ```
@@ -51,11 +53,16 @@ head(my_data)
 Second, rename your rows to your gene ID's and remove the gene name column.
 
 ```{r}
-# Assign the row names of the dataframe to be the ID's found in the column GeneID
+# Assign the row names of the dataframe to be the ID's found in the column 
+# GeneID
 row.names(my_data) <- my_data$GeneID
+
 # Remove the GeneID column by setting it to NULL
 my_data$GeneID <- NULL
-# Look at the top of the dataframe. The numbers on the far left should be replaced with the gene ID's and three columns remain: Sample_1, Sample_2, and Sample_3
+
+# Look at the top of the dataframe. The numbers on the far left should be 
+# replaced with the gene ID's and three columns remain: Sample_1, Sample_2, 
+# and Sample_3.
 head(my_data)
 ```
 
@@ -91,8 +98,10 @@ Note: When using gene symbols in mammals, there is a family of genes called "ERC
 Using grep() on **my_data** results in a print out of all the elements containing our pattern of interest but not the element itself.
 
 ```{r}
-# Look at the bottom of the dataframe. It is organized in a way that the spike-in names are at the end.
+# Look at the bottom of the dataframe. It is organized in a way that the 
+# spike-in names are at the end.
 tail(my_data)
+
 # Identify the elements that have a row name starting with ERCC- 
 grep("^ERCC-", row.names(my_data))
 ```
@@ -107,7 +116,8 @@ ercc_results <- grep("^ERCC-", row.names(my_data))
 Now using our indexing skills, we will extract all the rows that match to the elements in our **ercc_results** list. The column value will be omitted so that we can retrieve data from all of the columns. These results will be saved in a new object that I have named **spikes**.
 
 ```{r}
-# Subset all columns from the data using the list of indices provided in ercc_results 
+# Subset all columns from the data using the list of indices provided in 
+# ercc_results 
 spikes <- my_data[ercc_results, ]
 ```
 
@@ -115,8 +125,10 @@ You can look at the top of the file using head().
 
 ```{r}
 # Print out the top 6 lines of the object. 
-# Note: tables are stored as an object called a data frame. So head() will print out the top lines of the dataframe.
+# Note: tables are stored as an object called a data frame. So head() will print 
+# out the top lines of the dataframe.
 head(spikes)
+
 # Check what type of object "spikes" is.
 class(spikes)
 ```
@@ -164,7 +176,9 @@ Here we apply sum() to the data set, indicating that this function should be per
 
 ```{r}
 # Using apply to take the sum of each row of the data (indicated by 1).
-# The result is a long list with each element and row sum listed. I don't want it to print out to the console so I saved it as an object and used head() to look at the first few elements.
+# The result is a long list with each element and row sum listed. I don't want 
+# it to print out to the console so I saved it as an object and used head() to 
+# look at the first few elements.
 rows <- apply(my_data, 1, sum)
 head(rows)
 ```
@@ -183,15 +197,25 @@ Here are some examples to better understand all().
 ```{r, eval=FALSE}
 # What does the first line of the dataframe look like?
 my_data[1, ]
-# The first line is all zeros. Test to make sure we get the correct result using all(). Are all of the values non-zero? If zeros exist the result will be FALSE otherwise the result will be TRUE.
+
+# The first line is all zeros. Test to make sure we get the correct result using 
+# all(). Are all of the values non-zero? If zeros exist the result will be FALSE 
+# otherwise the result will be TRUE.
 all(my_data[1, ])
+
 # Print row 95 to the console.
 my_data[95, ]
+
 # What result do you get when you use all()? Are all of the values non-zero?
 all(my_data[95, ])
+
 # What does the last line look like?
 my_data[1463, ]
-# The last line of the dataframe does not have any zeros in any of the columns. Test to make sure we get the correct result using all(). Are all of the values non-zero? If zeros exist the result will be FALSE otherwise the result will be TRUE.
+
+# The last line of the dataframe does not have any zeros in any of the columns. 
+# Test to make sure we get the correct result using all(). Are all of the values 
+# non-zero? If zeros exist the result will be FALSE otherwise the result will 
+# be TRUE.
 all(my_data[1463, ])
 ```
 
@@ -203,16 +227,19 @@ Now we can select all the rows that do not contain zero values by applying all()
 3. Store the dataframe with a new name
 
 ```{r}
-# Using apply() to identify the elements/rows in the dataframe that have all columns with non-zeros. 
+# Using apply() to identify the elements/rows in the dataframe that have all 
+# columns with non-zeros. 
 # Where X = my_data, MARGIN = 1 (indicating rows), FUN = all
 read_filter_all <- apply(my_data, 
                          1, 
                          all)
 
-# Subsetting the elements that were identified as not having any zeros and storing it in a new dataframe called filtered_data_all
+# Subsetting the elements that were identified as not having any zeros and 
+# storing it in a new dataframe called filtered_data_all
 filtered_data_all <- my_data[read_filter_all, ]
 
-# Look at the top of the data. Already we can see that the first few rows containing zeros are not included.
+# Look at the top of the data. Already we can see that the first few rows 
+# containing zeros are not included.
 head(filtered_data_all)
 
 # The dimensions of the filtered dataset presented in rows (565) and columns (3)
@@ -235,21 +262,28 @@ For example:
 # The minumum number of reads I want
 min_reads <- 1
 
-# The minimum number of samples that must contain the minimum read value (min_reads)
+# The minimum number of samples that must contain the minimum read 
+# value (min_reads)
 min_samples <- 3
 
-# Using apply() to identify the elements in the dataframe that match our conditions. In this case, the requirements are that in each row, all three of the columns have a minimum of 1 read.
+# Using apply() to identify the elements in the dataframe that match our 
+# conditions. In this case, the requirements are that in each row, all three of 
+# the columns have a minimum of 1 read.
 read_filter <- apply(my_data, 
                      1,
                      function(samples) length(which(samples >= min_reads)) >= min_samples)
 
-# Subsetting the elements that were identified using our conditions and storing it in a new object/dataframe called filtered_my_data
+# Subsetting the elements that were identified using our conditions and storing 
+# it in a new object/dataframe called filtered_my_data
 filtered_data <- my_data[read_filter, ]
 
-# Look at the top of the data. Already we can see that the first few rows containing zeros are not included.
+# Look at the top of the data. Already we can see that the first few rows 
+# containing zeros are not included.
 head(filtered_data)
 
-# Our conditions duplicated the same conditions when we applied all() to the data. Thus, we expect the dimensions of the filtered data to be the same: rows (565) and columns (3).
+# Our conditions duplicated the same conditions when we applied all() to the 
+# data. Thus, we expect the dimensions of the filtered data to be the 
+# same: rows (565) and columns (3).
 dim(filtered_data)
 ```
 
@@ -270,7 +304,7 @@ Make sure to replace my file path ("/Users/stacey/Desktop/filtered_data.csv") wi
 # Save the dataframe named filltered_data to a .csv file.
 # Replace my file name path with yours!!!
 write.csv(filtered_data,
-          file="/Users/stacey/Desktop/filtered_data.csv")
+          file = "/Users/stacey/Desktop/filtered_data.csv")
 
 
 

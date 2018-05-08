@@ -1,11 +1,10 @@
 ---
 title: "Introduction to R"
 author: "Stacey Borrego"
-date: "4/07/2018"
+date: "5/08/2018"
 output:
-  html_document: default
   pdf_document: default
-  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -29,7 +28,8 @@ The purpose of this document is to give a very brief and digestable introduction
 ### Some Notes about RStudio and R
 #### RStudio
 
-* RStudio provides an enviroment with helpful tools for you to use and build scripts in R. Your basic enviroment will have at least your Console and Source (basically a text editor for you to write your script/file). You can change the layout of your RStudio enviroment by going to Tools > Global Options > Pane Layout. 
+* RStudio provides an enviroment with helpful tools for you to use and build scripts in R. Your basic enviroment will have at least your Console and Source (basically a text editor for you to write your script/file). 
+* You can change the layout of your RStudio enviroment by going to Tools > Global Options > Pane Layout. 
 * Learn more about [RStudio features](https://www.rstudio.com/products/rstudio/features/).
 
 #### R
@@ -267,7 +267,8 @@ is.logical(log_example2)
 
 ## Special Values
 
-There are four special values in R that may cause problems in your analysis, whether you are aware of it or not. These values are NA, NULL, Inf/-Inf, and NaN.
+There are four special values in R that may cause problems in your analysis, 
+whether you are aware of it or not. These values are NA, NULL, Inf/-Inf, and NaN.
 
 **NA**
 
