@@ -10,8 +10,8 @@ This file is an small RNAseq counts file that will be used as example in the tut
 
 #### Intro-to-R
 
-This is provided as an R markdown file (.Rmd), PDF, and html. This is the first tutorial in this set and focuses on the basic concepts in R.
+This is provided as an R markdown file (.Rmd), PDF, and HTML. This is the first tutorial in this set and focuses on the basic concepts in R.
 
 #### Intro-to-R-Extended
 
-This is provided as an R markdown file (.Rmd), PDF, and html. This is an extension of the concepts introduced in the first tutorial and focuses on manipulating the provided data file. 
+This is provided as an R markdown file (.Rmd), PDF, and HTML. This is an extension of the concepts introduced in the first tutorial and focuses on manipulating the provided data file. 
