@@ -1,17 +1,22 @@
 ---
 title: "Intro to R Extended"
 author: "Stacey Borrego"
-date: "5/08/2018"
+date: "6/25/2018"
 output:
-  pdf_document: default
-  html_document: default
+  html_document:
+    highlight: tango
+    theme: cerulean
+    toc: yes
+  pdf_document:
+    toc: yes
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Purpose
+### Purpose
 
 This document is a continuation of Intro-to-R.html and will address more topics in R such as filtering/subsetting your data and saving a file. These concepts require further explanations and understanding than will be provided here. However, I hope this document will demonstrate the power of R and introduce you to essential concepts.
 
@@ -23,11 +28,13 @@ To get the files:
 * Click on the green **Clone or download** button in the upper right corner
 * Click on  **Download ZIP**
 
+<br>
+
 ## Reading Data into R
 
-Just as a precaution, let's load our data again. Since our data is tabular, it will be stored in a dataframe which I will name **my_data**. I have included the full path to the file on my computer, you need to replace everything in quotes with the path on your computer.
+Let's load our data. Since our data is tabular, it will be stored in a dataframe which I will name **my_data**. I have included the full path to the file on my computer, you need to replace everything in quotes with the path on your computer.
 
-Note: I will use the functions head() and tail() to keep looking at the data to make sure the changes I expect to have occurred actually did.
+Note: I will use the functions `head()` and `tail()` to keep looking at the data to make sure the changes I expect to have occurred actually did.
 
 
 ```{r}
@@ -36,7 +43,10 @@ head(my_data)
 tail(my_data)
 ```
 
-## Changing Column and Row Names
+<br>
+
+## Changing Column and Row Names  
+
 I want to make our data more visually friendly so I will repeat the modifications we performed in Intro-to-R.html. First, change the column names.
 
 ```{r}
@@ -50,11 +60,11 @@ colnames(my_data) <- new_names
 head(my_data)
 ```
 
+<br>
 Second, rename your rows to your gene ID's and remove the gene name column.
 
 ```{r}
-# Assign the row names of the dataframe to be the ID's found in the column 
-# GeneID
+# Assign the row names of the dataframe to be the ID's found in the column GeneID
 row.names(my_data) <- my_data$GeneID
 
 # Remove the GeneID column by setting it to NULL
@@ -65,6 +75,8 @@ my_data$GeneID <- NULL
 # and Sample_3.
 head(my_data)
 ```
+
+<br>
 
 ## Subsetting
 
@@ -83,19 +95,19 @@ No matter the method you choose, the general idea remains the same.
 
 ### Subsetting with grep()
 
-When we want to extract or subset information from the data that matches a pattern we can use the function grep(). This is an extremely helpful tool and you can read more on how to use it by typing ?grep into the console.
+When we want to extract or subset information from the data that matches a pattern we can use the function `grep()`. This is an extremely helpful tool and you can read more on how to use it by typing `?grep` into the console.
 
-Here is a shortened form of grep() usage:
+Here is a shortened form of `grep()` usage:
 
 **grep(pattern, x)**
           
-We are going to use grep() to extract our spike-in reads from the data. Where **pattern** will be replaced with "ERCC" (the spike-in name) and **x** will be replaced with what we want to search - in this case the row names of the **my_data** dataframe - row.names(my_data).
+We are going to use `grep()` to extract our spike-in reads from the data. Where **pattern** will be replaced with "ERCC" (the spike-in name) and **x** will be replaced with what we want to search - in this case the row names of the **my_data** dataframe - `row.names(my_data)`.
 
-Note: The **^** before "ERCC" is a regular expression and indicates that we only want instances of "ERCC" when it is at the beginning of the line. If there was a gene named "brERCC", this would show up in our list if the **^** regular expression was not included. 
+Note: The `^` before "ERCC" is a regular expression and indicates that we only want instances of "ERCC" when it is at the beginning of the line. If there was a gene named "brERCC", this would show up in our list if the `^` regular expression was not included. 
 
-Note: When using gene symbols in mammals, there is a family of genes called "ERCC ..." so it helps to use the dash at the end of the spike-in name to help clarify what we want to extract (e.g. "^ERCC-"). However, care needs to be taken when using symbols for pattern matching since many like **^** and **.** are regular expressions. Here is a link to a [regular expression cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
+Note: When using gene symbols in mammals, there is a family of genes called "ERCC ..." so it helps to use the dash at the end of the spike-in name to help clarify what we want to extract (e.g. "^ERCC-"). However, care needs to be taken when using symbols for pattern matching since many like `^` and `.` are regular expressions. Here is a link to a [regular expression cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf).
 
-Using grep() on **my_data** results in a print out of all the elements containing our pattern of interest but not the element itself.
+Using `grep()` on **my_data** results in a print out of all the elements containing our pattern of interest but not the element itself.
 
 ```{r}
 # Look at the bottom of the dataframe. It is organized in a way that the 
@@ -106,6 +118,7 @@ tail(my_data)
 grep("^ERCC-", row.names(my_data))
 ```
 
+<br>
 We can save our results into a new object, I'll name it **ercc_results**.
 
 ```{r}
@@ -113,6 +126,7 @@ We can save our results into a new object, I'll name it **ercc_results**.
 ercc_results <- grep("^ERCC-", row.names(my_data))
 ```
 
+<br>
 Now using our indexing skills, we will extract all the rows that match to the elements in our **ercc_results** list. The column value will be omitted so that we can retrieve data from all of the columns. These results will be saved in a new object that I have named **spikes**.
 
 ```{r}
@@ -121,6 +135,7 @@ Now using our indexing skills, we will extract all the rows that match to the el
 spikes <- my_data[ercc_results, ]
 ```
 
+<br>
 You can look at the top of the file using head().
 
 ```{r}
@@ -133,9 +148,10 @@ head(spikes)
 class(spikes)
 ```
 
-Based on the documentation for the ERCC spike-in, we know that 92 transcripts should be identified. Using dim() to look at the dimensions of our **spikes** data, it indicates that there are indeed 92 rows/transcripts in all three of our samples.
+<br>
+Based on the documentation for the ERCC spike-in, we know that 92 transcripts should be identified. Using `dim()` to look at the dimensions of our **spikes** data, it indicates that there are indeed 92 rows/transcripts in all three of our samples.
 
-Note: If there are more or less rows in your **spikes** dataframe, your subsetting may have included or excluded something that was not intended.
+Note: If there are more or less rows in your **spikes** dataframe, your subsetting may have included or excluded something unintentional.
 
 ```{r}
 dim(spikes)
@@ -147,11 +163,13 @@ dim(spikes)
 
 In many downstream analysis tools it can be problematic if zeros are present in the data. Some programs can adjust for this and filter the data for you. Alternatively, you can perform this process yourself by subsetting.
 
+<br>
+
 #### Subsetting with apply()
 
-The function apply() is a powerful way to perform functions on multiple elements of an object like a dataframe. We can indicate if the function should be applied to each row or each column of the dataframe. 
+The function `apply()` is a powerful way to perform functions on multiple elements of an object like a dataframe. We can indicate if the function should be applied to each row or each column of the dataframe. 
 
-If you type ?apply in your console you will see the documentation in the **Help** tab. It tells us that we can use apply() in the following way. 
+If you type `?apply` in your console you will see the documentation in the **Help** tab. It tells us that we can use `apply()` in the following way. 
 
 **Usage** <br/>
 apply(X, MARGIN, FUN, ...)
@@ -165,14 +183,14 @@ This determines what to filter, either rows or columns. Rows are indicated by 1 
 **FUN**	<br/>
 The function to be applied to each row, column, or both as indicated by MARGIN. Do not include the parenthesis after the function name!
 
-Using the function sum(), we can see how sum() can be applied to the data. 
+Using the function `sum()`, we can see how `sum()` can be applied to the data. 
 
 ```{r}
 # Using the function sum() to take the sum of all the values in the dataframe
 sum(my_data)
 ```
 
-Here we apply sum() to the data set, indicating that this function should be performed on each row by setting the MARGIN argument to 1.
+Here we apply `sum()` to the data set, indicating that this function should be performed on each row by setting the `MARGIN` argument to 1.
 
 ```{r}
 # Using apply to take the sum of each row of the data (indicated by 1).
@@ -183,17 +201,18 @@ rows <- apply(my_data, 1, sum)
 head(rows)
 ```
 
-Here we apply sum() to the data set, indicating that this function should be performed on each column by setting the MARGIN argument to 2.
+<br>
+Here we apply `sum()` to the data set, indicating that this function should be performed on each column by setting the `MARGIN` argument to 2.
 ```{r}
 
 # Using apply to take the sum of each column of the data (indicated by 2) 
 apply(my_data, 2, sum)
 ```
 
+<br>
+To filter our reads, I will use the function `all()`. In a nutshell, `all()` will determine if all the values are non-zero. If they are all non-zero, the result will be `TRUE`. If one or more values is zero, the result will be `FALSE`. 
 
-To filter our reads, I will use the function all(). In a nutshell, all() will determine if all the values are non-zero. If they are all non-zero, the result will be TRUE. If one or more values is zero, the result will be FALSE. 
-
-Here are some examples to better understand all().
+Here are some examples to better understand `all()`.
 ```{r, eval=FALSE}
 # What does the first line of the dataframe look like?
 my_data[1, ]
@@ -219,8 +238,8 @@ my_data[1463, ]
 all(my_data[1463, ])
 ```
 
-
-Now we can select all the rows that do not contain zero values by applying all() to the data. 
+<br>
+Now we can select all the rows that do not contain zero values by applying `all()` to the data. 
 
 1. Identify all the elements/rows of the data that do not contain zero values
 2. Copy all the non-zero elements to a new dataframe
@@ -230,9 +249,7 @@ Now we can select all the rows that do not contain zero values by applying all()
 # Using apply() to identify the elements/rows in the dataframe that have all 
 # columns with non-zeros. 
 # Where X = my_data, MARGIN = 1 (indicating rows), FUN = all
-read_filter_all <- apply(my_data, 
-                         1, 
-                         all)
+read_filter_all <- apply(my_data, 1, all)
 
 # Subsetting the elements that were identified as not having any zeros and 
 # storing it in a new dataframe called filtered_data_all
@@ -246,7 +263,8 @@ head(filtered_data_all)
 dim(filtered_data_all)
 ```
 
-But what if you wanted to set a threshold for a minimum number of read counts greater than zero? We can do this using apply() but making our own function. The function we make will return rows with a minimum number of reads in a minimum number of columns. 
+<br>
+But what if you wanted to set a threshold for a minimum number of read counts greater than zero? We can do this using `apply()` but making our own function. The function we make will return rows with a minimum number of reads in a minimum number of columns. 
 
 For example: 
 
@@ -255,20 +273,20 @@ For example:
 * minimum of 5 reads in a minimum of 2 columns
     + Since we have 3 columns, this would not exclude zero values in one column. If you didn't want any zeros you would do this on the data after all rows with zeros were excluded.
     
-**Don't worry about the function itself right now, creating your own function will be discussed in the Bioinformatics Support Group - Intermediate R meeting.**
+**Don't worry about the function itself right now**
 
 
 ```{r}
 # The minumum number of reads I want
-min_reads <- 1
+min_reads <- 2
 
 # The minimum number of samples that must contain the minimum read 
 # value (min_reads)
-min_samples <- 3
+min_samples <- 2
 
 # Using apply() to identify the elements in the dataframe that match our 
-# conditions. In this case, the requirements are that in each row, all three of 
-# the columns have a minimum of 1 read.
+# conditions. In this case, the requirements are that in each row, at 
+# least two columns must have a minmum of 2 reads.
 read_filter <- apply(my_data, 
                      1,
                      function(samples) length(which(samples >= min_reads)) >= min_samples)
@@ -281,13 +299,11 @@ filtered_data <- my_data[read_filter, ]
 # containing zeros are not included.
 head(filtered_data)
 
-# Our conditions duplicated the same conditions when we applied all() to the 
-# data. Thus, we expect the dimensions of the filtered data to be the 
-# same: rows (565) and columns (3).
+# Let's check the dimensions of the data now
 dim(filtered_data)
 ```
 
-I encourage you to reassign the variables **min_reads** and **min_samples** by replacing the numbers after **<-** so you can see how it changes the resulting subsetted data.
+I encourage you to reassign the variables **min_reads** and **min_samples** by replacing the numbers after `<-` so you can see how it changes the resulting subsetted data.
 
 ## Write Data to a File
 
@@ -295,9 +311,9 @@ Now that you have cleaned up your file you can save it in a way that is accessib
 
 ### write.csv()
 
-The easiest way to export your data to a file is by saving it as a comma separated value file - also known as csv. Use the function write.csv() to indicate the object that should be saved and where is should be saved on your computer. Learn more by typing ?write.csv into the console.
+The easiest way to export your data to a file is by saving it as a comma separated value file - also known as csv. Use the function `write.csv()` to indicate the object that should be saved and where is should be saved on your computer. Learn more by typing `?write.csv` into the console.
 
-Make sure to replace my file path ("/Users/stacey/Desktop/filtered_data.csv") with yours!
+Make sure to replace my file path (`"/Users/stacey/Desktop/filtered_data.csv"`) with yours!
 
 
 ```{r}
@@ -319,6 +335,7 @@ write.csv(filtered_data,
     +  Always include the programming language that you are talking about in your search (e.g. "how to subset in R", "mean R", "swirl R", "how to delete a dataframe column by name in R")
     
 * Swirl is a great interactive way to learn more about R. You can get started by following this [link](http://swirlstats.com/students.html).
+
 * If you need to clear your environment (remove all variables, loaded data, etc.) you can type this into your console: **rm(list=ls())**
 
 ### Helpful Concepts and Functions to Keep Mind and Research Further
@@ -326,13 +343,14 @@ write.csv(filtered_data,
 * Subsetting
     + subset()
     + which()
-    + dplyr()
-    + Just a few functions to get started with.
+    + [dplyr](https://dplyr.tidyverse.org/) is an awesome package to help with subsetting and is part of a larger project called the [tidyverse](https://www.tidyverse.org/). You can read more about these great tools in the book [*R for Data Science*](https://r4ds.had.co.nz/) written by Garrett Grolemund and Hadley Wickham.
+    
 * apply()
     + The apply family is your friend, it can look scary but don't avoid it.
     + There are a ton of tutorials on apply(), check them out! I recommend focusing on apply() first, the other apply() family members can wait.
+    
 * str()
     + This function displays the internal structure of an R object.
-    + Type ?str into the console to learn more about this function.
+    + Type `?str` into the console to learn more about this function.
 
 

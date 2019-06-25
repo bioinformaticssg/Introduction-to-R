@@ -3,21 +3,20 @@ title: "Introduction to R"
 author: "Stacey Borrego"
 date: "6/24/2018"
 output:
-  pdf_document:
+  html_document:
     highlight: tango
+    theme: cerulean
     toc: yes
   word_document:
     toc: yes
-  html_document:
+  pdf_document:
     highlight: tango
-    theme: yeti
     toc: yes
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<br>
 
 ### Purpose
 
