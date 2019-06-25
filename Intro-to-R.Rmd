@@ -1,43 +1,53 @@
 ---
 title: "Introduction to R"
 author: "Stacey Borrego"
-date: "5/08/2018"
+date: "6/24/2018"
 output:
-  pdf_document: default
-  html_document: default
+  pdf_document:
+    highlight: tango
+    toc: yes
+  word_document:
+    toc: yes
+  html_document:
+    highlight: tango
+    theme: yeti
+    toc: yes
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<br/>
+<br>
 
 ### Purpose
 
 The purpose of this document is to give a very brief and digestable introduction to R. There are so many details in every programming language and certainly more thorough explanations are needed than I will provide here. My goal with this document is to expose you to R and hopefully pique your interest to learn more. 
 
-<br/>
+<br>
 
 ### Resources used for this document
 
 * [*Bioinformatics Data Skills: Reproducible and Robust Research with Open Source Tools*](http://shop.oreilly.com/product/0636920030157.do) by Vince Buffalo (O'Reilly 2015)
-* [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+* [*Advanced R*](http://adv-r.had.co.nz/) by Hadley Wickham
+* [*R Markdown Cheat Sheet*](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 
-<br/>
+<br>
 
-### Some Notes about RStudio and R
+### Some Notes about RStudio and R  
+
 #### RStudio
 
 * RStudio provides an enviroment with helpful tools for you to use and build scripts in R. Your basic enviroment will have at least your Console and Source (basically a text editor for you to write your script/file). 
 * You can change the layout of your RStudio enviroment by going to Tools > Global Options > Pane Layout. 
-* Learn more about [RStudio features](https://www.rstudio.com/products/rstudio/features/).
+* Learn more about [*RStudio features*](https://www.rstudio.com/products/rstudio/features/).
 
 #### R
-* Some programming languages are very picky about spacing, but R is usually not. That being said, there are style conventions that are recommended. These conventions extend from spacing to naming and everything in between. Here is a [Style Guide](http://adv-r.had.co.nz/Style.html) to get you started.
+* Some programming languages are very picky about spacing, but R is usually not. That being said, there are style conventions that are recommended. These conventions extend from spacing to naming and everything in between. Here is a [*Style Guide*](http://adv-r.had.co.nz/Style.html) to get you started.
 
 <br/>
 
 # R Basics
+
 ## Simple Math
 
 Let's get started by writing some simple math expressions for R to evaluate. 
@@ -58,6 +68,7 @@ You can run expressions in one of two ways, or both if you are curious!
 4 / 3
 ```
 
+<br>
 To indicate the order of evaluation, use parentheses to indicate which expression should be evaluated first.
 
 ```{r}
@@ -65,19 +76,21 @@ To indicate the order of evaluation, use parentheses to indicate which expressio
 (4 + 3)/2
 ```
 
+<br>
 We can also use functions to perform mathematical operations. Functions are written with the function name followed by parentheses, no spaces! A function takes zero or more arguments, evaluates the input, and outputs a return value.
 
-To find the square root of a number, we can use the function sqrt().
+To find the square root of a number, we can use the function `sqrt()`.
 
 ```{r}
 sqrt(4)
 sqrt(2*2)
 ```
-<br/>
+
+<br>
 
 ## Getting Help
 
-To learn more about the arguments for a function you can use the function args(), just provide the function name as the agrument.
+To learn more about the arguments for a function you can use the function `args()`, just provide the function name as the agrument.
 
 ```{r}
 args(args)
@@ -85,51 +98,67 @@ args(sqrt)
 args(plot)
 ```
 
+<br>
 If you want to read the documentation for a function, you can pull up a special help window in Rstudio.
 
 ```{r}
 help(sqrt)
 ?sqrt
 ```
-<br/>
+
+<br>
 
 ## Variables
 
-Variables are a great way to save a value for future use. We can assign a value to a symbol using the <- assignment operator.
+Variables are a great way to save a value for future use. We can assign a value to a symbol using the `<-` assignment operator.
 
 ```{r}
 x <- 4
 ```
 
-When we want to see what value our variable is assigned we can just type in the variable symbol into the console. You can also look at the Environment window in RStudio and it will show you all the variables you have assigned and their values.
+<br>
+When we want to see what value our variable is assigned we can just type in the variable symbol into the console. You can also look at the Environment window in RStudio and it will show you all the variables you have assigned and their values.  
 
 ```{r}
 x
 ```
 
-Once our variable has a value assigned, we can use it in functions.
+<br>
+Once our variable has a value assigned, we can use it in functions.  
 
 ```{r}
 sqrt(x)
 ```
 
-Variables can also be assigned the ouput of an expression.
+<br>
+Variables can also be assigned the ouput of an expression.  
 
 ```{r}
 square_result <- sqrt(x)
 square_result
 ```
-<br/>
+
+<br>
+Variables can be overwritten by assigning a new value to an existing variable.
+Here I am overwriting the value of x from 4 and reassigning it to be 20.  
+
+```{r}
+x <- 20
+x
+```
+<br>
 
 ## Vectors
 
-R is most known for its use of vectors and vectorization. Everything is stored in a vector; a single value is stored in a vector of 1. You can see the length of a vector using the function length().
+R is most known for its use of vectors and vectorization. Everything is stored in a vector; a single value is stored in a vector of 1. You can see the length of a vector using the function `length()`.
 
 ```{r}
+x
 length(x)
 ```
 
-We can create longer vectors using c(), which stands for concatenate.
+<br>
+We can create longer vectors using `c()`, which stands for concatenate.  
 
 ```{r}
 y <- c(1, 5, 7)
@@ -137,23 +166,26 @@ y
 length(y)
 ```
 
-Vectorization is the process by which a process is applied to a whole array instead of a single element. This means if the variable **y** were multiplied by 2, each element will be muliplied by 2 but the vector length will remain at 3.
+<br>
+Vectorization is the process by which a process is applied to a whole array instead of a single element. This means if the variable **y** were multiplied by 2, each element will be muliplied by 2 but the vector length will remain at 3.  
 
 ```{r}
 y * 2
 length(y * 2)
 ```
 
+<br>
 Vectorization allows us to perform arithmetic operations on two vectors, each operation occurring elementwise (e.g. a1 + b1, a2 + b2, a3 + b3 ...)
 
 ```{r}
 a <- 1:3
 a
-b <- 4:6
+b <- 10:12
 b
 a + b
 ```
 
+<br>
 If the two vectors are not the same length, R will recycle the values of the shorter vector (e.g. c1 + d1, c2 + d2, c3 + d1, c4 + d2)
 
 ```{r}
@@ -164,6 +196,7 @@ d
 c + d
 ```
 
+<br>
 A warning will pop up if the longer vector length is not a multiple of the shorter vector length. The operation will still be performed but R thought it should say something.
 
 ```{r}
@@ -174,7 +207,8 @@ f
 e + f
 ```
 
-We can also provide vectors as an argument to a function. Depending on what the function does, your output will look differently. For example, sqrt() only takes the square root of one number at a time, so it returns a value for each number in the vector **y** -- sqrt(1), sqrt(5), sqrt(7). However, mean() computes the average of a vector of numbers and thus returns a single value. 
+<br>
+We can also provide vectors as an argument to a function. Depending on what the function does, your output will look differently. For example, `sqrt()` only takes the square root of one number at a time, so it returns a value for each number in the vector **y** -- `sqrt(1)`, `sqrt(5)`, `sqrt(7)`. However, `mean()` computes the average of a vector of numbers and thus returns a single value. 
 
 ```{r}
 y
@@ -182,94 +216,113 @@ sqrt(y)
 mean(y)
 ```
 
-Note: When you look up the arguments for a function, you will often see **x** given as the first argument. The documentation will provide more information as to what **x** is. For example when you look up the documentation for square root (?sqrt), **x** is defined as "a numeric or complex array". When you look at the documentation for mean (?mean), **x** is defined as "typically a vector-like object". Just don't confuse this with a variable that you may have set, it is just a placeholder.
+Note: When you look up the arguments for a function, you will often see **x** given as the first argument. The documentation will provide more information as to what **x** is. For example when you look up the documentation for square root (`?sqrt`), **x** is defined as "a numeric or complex array". When you look at the documentation for mean (`?mean`), **x** is defined as "typically a vector-like object". Just don't confuse this with a variable that you may have set, it is just a placeholder.
 
 <br/>
 
 ## Vector Types
 
-Vectors in R must contain elements of the same type. We can check the vector type by using the function class() or typeof(). It is important to note that R will coerce vectors of different types to the type that leads to no information loss. For example, a vector containing both characters and numeric data will be coerced into character values.
+Vectors in R must contain elements of the same type. The types of elements are: numeric (aka double), integer, character, and logical. We can check the vector type by using the function `class()` or `typeof()`. It is important to note that R will coerce vectors of different types of elements to the type that leads to no information loss. For example, a vector containing both characters and numeric data will be coerced into character values. 
 
+<br>
 **Numeric (aka double)**
 
 * Any real number
 * example: 4, -4, 4.4, -4.04 
-* *Test function*: is.numeric()
+* *Test function*: `is.numeric()`
     + returns TRUE or FALSE value
-* *Coercion function*: as.numeric()
+* *Coercion function*: `as.numeric()`
     + coerces values to be numeric
   
 ```{r}
 num_example <- c(4, -4, 4.4, -4.04)
-class(num_example)
+typeof(num_example)
 ```
 
+<br>
 **Integer**
 
 * Any whole number
 * example: 4, -4, 44
 * By default, integer values are assigned as numeric. It must be explicitly indicated that the values should be treated as integers.
-* *Test function*: is.integer()
-* *Coercion function*: as.integer()
-* Will sometimes be indicated with an L after the number.
+* *Test function*: `is.integer()`
+* *Coercion function*: `as.integer()`
+* Note: These values are sometimes indicated with an L after the number.
 
 ```{r}
 int_example <- c(4, -4, 44)
-class(int_example)
+typeof(int_example)
 int_example <- as.integer(int_example)
-class(int_example)
+typeof(int_example)
 
-int_example2 <- 5
-is.integer(int_example2)
-int_example2 <- as.integer(5)
-is.integer(int_example2)
-
-int_example3 <- as.integer(5.9999)
+int_example3 <- as.integer(5.99)
 int_example3
 ```
 
+<br>
 **Character**
 
 * Character data represent text, which are called strings. Text data that is enclosed in either double or single quotes is interpreted as a string.
-* example: "i am a string", "ABCD"
-* *Test function*: is.character()
-* *Coercion function*: as.character()
+* example: "i am a string", "ABCD", "4"
+* *Test function*: `is.character()`
+* *Coercion function*: `as.character()`
 
 ```{r}
 char_example <- c("a", "b", "c")
-class(char_example)
+typeof(char_example)
 
 num_example
 is.character(num_example)
+
 char_example2 <- as.character(num_example)
 char_example2
 is.character(char_example2)
 ```
 
+<br>
 **Logical**
 
 * Logical values represent Boolean values, a binary value having only two options. In R, Boolean values are TRUE or FALSE
-* *Test function*: is.logical()
-* *Coercion function*: as.logical()
+* *Test function*: `is.logical()`
+* *Coercion function*: `as.logical()`
+* Note: Logical vectors can be coerced to numeric vectors, where True becomes 1 
+and False becomes 0. This is particularly usefully if you want to get the sum 
 
 ```{r}
 log_example <- c(TRUE, FALSE)
 is.logical(log_example)
+as.numeric(log_example)
 
-num_example
+test_example <- c(0, 1, 4, -1)
 is.logical(num_example)
-log_example2 <- as.logical(num_example)
+
+log_example2 <- as.logical(test_example)
 log_example2
-is.logical(log_example2)
+
 ```
 
-<br/>
+<br>
+**Combined Example**
+
+* As previously mentioned, a vector can only contain one type of element. If different types of elements exist within a vector, the elements are coerced into a type that results in minimal loss of information. The ranking for coercion is: character, double, integer, and logical. 
+
+```{r}
+combo_example1 <- c(TRUE, 4.0, 4, "hello")
+typeof(combo_example1)
+
+combo_example2 <- c(TRUE, 4)
+typeof(combo_example2)
+
+```
+
+<br>
 
 ## Special Values
 
 There are four special values in R that may cause problems in your analysis, 
 whether you are aware of it or not. These values are NA, NULL, Inf/-Inf, and NaN.
 
+<br>
 **NA**
 
 * "Not Available"
@@ -280,21 +333,24 @@ whether you are aware of it or not. These values are NA, NULL, Inf/-Inf, and NaN
     + complete.cases()
     + na.rm = TRUE (this is an argument for a function)
     + sort(x, na.last = TRUE)
-    
+   
+<br> 
 **NULL**
 
 * "No value, none"
 * Null represents not having a value, which is different than the missing data of NA
 * A few ways to handle them:
     + is.null()
-    
+
+<br>
 **Inf/-Inf**
 
 * "Positive infinity, negative infinity"
 * A few ways to handle them:
     + is.infite()
     + is.finite()
-    
+
+<br>
 **NaN**
 
 * "Not a Number"
@@ -303,13 +359,13 @@ whether you are aware of it or not. These values are NA, NULL, Inf/-Inf, and NaN
     + is.nan()
     + coerce all NaN values to NA using is.na()
 
-<br/>
+<br>
 
 # Working with Data
 
 ## Where am I?
 
-You can find your current working directory by using getwd() and setting the working directory with setwd(). You will want to replace my path with the  path of your choosing.
+You can find your current working directory by using `getwd()` and setting the working directory with `setwd()`. You will want to replace my path with the  path of your choosing.
 
 Using RStudio, in the Files tab you can navigate to a directory, select More, and then click Set as Working Directory.
 
@@ -319,13 +375,13 @@ setwd("/Users/stacey/Data/GitHub/Introduction-to-R")
 ```
 <br/>
 
-## Reading Data into R
+## Reading Data into R  
 
 The following uses the combined_out.txt file that was generated in the [Read Counts](https://sites.google.com/view/bioinformaticssg/presentations/read-counts) meeting. Following the steps from the tutorial should generate the same file I have posted on the [BioinformaticsSG GitHub page](https://github.com/bioinformaticssg/Introduction-to-R). To get this file just follow the link to the GitHub page, click on the green **Clone or download** button in the upper right corner, and choose **Download ZIP**. 
 
-There are two common ways to read data files into R, depending on the type of file they are. For comma separated value (CSV) files use read.csv() and for tab-delimited files use read.table(). There are options for reading in data of other types and code from a script but we will focus on these today for our data.
+There are two common ways to read data files into R, depending on the type of file they are. For comma separated value (CSV) files use `read.csv()` and for tab-delimited files use `read.table()`. There are options for reading in data of other types and code from a script but we will focus on these today.
 
-For the read.table() command below, replace the path I have provided with your path to the file. If you have already set the working directory and it contains your file, you can just provide the file name. 
+For the `read.table()` command below, replace the path I have provided with your path to the file. If you have already set the working directory and it contains your file, you can just provide the file name. 
 
 Note: the path and file names are strings and must be enclosed in quotes.
 
@@ -333,13 +389,15 @@ Note: the path and file names are strings and must be enclosed in quotes.
 read.table("/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt")
 ```
 
-When you run the read.table() command, you will see the data file printed to your console. It would be nice if it could be referred to without having to type out the read.table() command, so let's assign a variable to the data table.
+<br>
+When you run the `read.table()` command, you will see the data file printed to your console. It would be nice if it could be referred to without having to type out the `read.table()` command, so let's assign a variable to the data table.
 
 ```{r}
 my_data <- read.table("/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt")
 ```
 
-Now it will be easier to access and use the data table. You can now look at the top of the data using head(), at the end using tail(), determine the number of columns using ncol() or length(), the number of rows using nrow(), and the dimensions of the data dim().
+<br>
+You can now look at the top of the data using `head()`, at the end using `tail()`, determine the number of columns using `ncol()` or `length()`, the number of rows using `nrow()`, and the dimensions of the data with `dim()`.
 
 ```{r}
 head(my_data)
@@ -353,14 +411,15 @@ dim(my_data)
 
 ## Changing Column Names
 
-As a default, read.table() assumes the data file does not have a first row with the names of each column. Although this is true for our data, it will not always be. If your data does have a header, just set the header argument to TRUE like so - read.table("file.txt", header=TRUE). You will notice, the header that R made for us when header=FALSE is V1, V2, V3, V4.
+As a default, `read.table()` assumes the data file does not have a first row with the names of each column. Although this is true for our data, it will not always be. If your data does have a header, just set the header argument to TRUE like so - `read.table("file.txt", header = TRUE)`. You will notice, the header that R made for us when `header = FALSE` is V1, V2, V3, V4.
 
-Let's give our column names something more intuitive. First, look at a list of the column names using colnames().
+Let's give our column names something more intuitive. First, look at a list of the column names using `colnames()`.
 
 ```{r}
 colnames(my_data)
 ```
 
+<br>
 There are four columns that need new names. I am going to make a vector of strings that will represent each column's new name. Then I will assign the column names to be the names in the vector.
 
 ```{r}
@@ -369,11 +428,11 @@ colnames(my_data) <- new_names
 colnames(my_data)
 head(my_data)
 ```
-<br/>
+<br>
 
 ## Indexing and Subsetting
 
-When you read tabular data into R using read.csv() or read.table() it is stored as a dataframe. Just as any data table, dataframes have rows for observations and columns for each variable of the dataset. Each column of a dataframe is a vector and contains the same type of data as previously described. A dataframe, however, contains vectors of different types and that is why they exist.
+When you read tabular data into R using `read.csv()` or `read.table()` it is stored as a dataframe. Just as any data table, dataframes have rows for observations and columns for each variable of the dataset. Each column of a dataframe is a vector and contains the same type of data as previously described. A dataframe, however, contains vectors of different types.
 
 More often then not, we want to select certain columns or rows to work with, which is possible with an understanding of indexing and subsetting. 
 
@@ -388,6 +447,7 @@ alphabet[1:4]
 alphabet[c(8, 5, 12, 12, 15)]
 ```
 
+<br>
 You can also remove elements in the same manner.
 
 ```{r}
@@ -396,14 +456,16 @@ alphabet[-(1:13)]
 alphabet[-c(1, 26)]
 ```
 
-You can select elements of a dataframe as well but a little differently. A common way to access columns of a dataframe is by using the $ operator and the name of the column. I am not showing the output but you should see a list printed on the console window.
+<br>
+You can select elements of a dataframe as well but a little differently. A common way to access columns of a dataframe is by using the `$` operator and the name of the column. I am not showing the output but you should see a list printed on the console window.
 
 ```{r, results='hide'}
 my_data$GeneID
 my_data$Sample_1
 ```
 
-Alternatively, you can use brackets just as we did in the vector example. Since dataframes have two dimensions (rows and columns) the bracket operator can take two indexes separated by a comma (e.g. [row, column]). Omitting the row index will return all the rows (e.g. [, column]) and ommitting the column index will return all the columns (e.g. [row, ]). 
+<br>
+Alternatively, you can use brackets just as we did in the vector example. Since dataframes have two dimensions (rows and columns) the bracket operator can take two indexes separated by a comma (e.g. `[row, column]`). Omitting the row index will return all the rows (e.g. `[, column]`) and omitting the column index will return all the columns (e.g. `[row, ]`). 
 
 ```{r}
 my_data[1, ]
@@ -415,52 +477,55 @@ my_data[1:4, "GeneID"]
 my_data[1:4, c("GeneID", "Sample_1")]
 my_data[1:4, c("GeneID", "Sample_2")]
 ```
-<br/>
+<br>
 
 ## Changing Row Names
 
 When you look a the data table, you will notice the left most column are numbers, these are your row names. Some programs require that your row names are set to your gene names and expect the gene name column to be excluded.
 
-We can do this by using row.names() and subsetting the column containing the gene names. We will then exclude the gene name column and re-assign the my_data variable so it will contain the modifications we just created.
+We can do this by using `row.names()` and subsetting the column containing the gene names. We will then exclude the gene name column and re-assign the **my_data** variable so it will contain the modifications we just created.
 
 Note: Changing the column names or row names modifies the dataframe and does not require a re-assignment of the variable that the dataset is saved as.
 
 ```{r}
 head(my_data)
-row.names(my_data)[1:10]
+row.names(my_data)[1:6]
 row.names(my_data) <- my_data$GeneID
 head(my_data)
 my_data <- my_data[, -1]
 head(my_data)
-row.names(my_data)[1:10]
+row.names(my_data)[1:6]
 ```
 
-If you want a shortcut to renaming your rows, you can assign the column you want to be your row names when you first read your data in R. You know that index 1 is the "GeneID" column so you can pass 1 into your row.names argument.
+<br>
+If you want a shortcut to renaming your rows, you can assign the column you want to be your row names when you first read your data in R. You know that index 1 is the "GeneID" column so you can pass 1 into your `row.names` argument.
 
 The column names are untouched and will still need to be modified as described above.
 
 ```{r}
 named_data <- read.table("/Users/stacey/Data/GitHub/Introduction-to-R/combined_out.txt",
-                         row.names=1)
+                         row.names = 1)
 head(named_data)
-rownames(named_data)[1:10]
+rownames(named_data)[1:6]
 ```
-<br/>
+<br>
 
 # Packages
 
 Packages are collections of R functions, data, and code that help beef up R's capabilities. It is very likely that someone has written a package that will help you achieve whatever your ultimate goal may be. Base R comes with a set of packages but for every new package you want to add you will have to install it manually -- don't worry, it is easy!
 
+<br>
 **CRAN - install.packages()**
 
 * CRAN = Comprehensive R Archive Network 
 * This option downloads and installs packages from CRAN-like repositories or from local files and is the most common way to get packages
-* Find out more about this using ?install.packages
+* Find out more about this using `?install.packages`
 
 ```{r, eval=FALSE}
 install.packages("dplyr")
 ```
 
+<br>
 [**Bioconductor**](https://bioconductor.org/packages/release/BiocViews.html#___Software)
 
 * R packages for genomic data analysis are usually found on the Bioconductor website
@@ -471,12 +536,13 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("DESeq2")
 ```
 
+<br>
 **RStudio - Packages**
 
 Lastly, RStudio has a feature to help you install packages in a point and click fashion.
 
 Choose the Packages tab > click Install > choose Repository(CRAN) > type the package name >  hit Install. 
 
-This the same as the install.packages() option so you may need to check Bioconductor if you don't find the package you are looking for.
+This the same as the `install.packages()` option so you may need to check Bioconductor if you don't find the package you are looking for.
 
 
